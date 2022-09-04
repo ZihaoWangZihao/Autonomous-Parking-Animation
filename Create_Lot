@@ -1,0 +1,31 @@
+function [x_spots, y_spots] = create_lot(l_lot, w_lot, l_spot, w_spot, n_row)
+%   create_lot Plots the Defined Parking Lot
+%       create_lot(l_lot, w_lot, l_spot, w_spot) plots a figure
+%       there is no numeric output
+%       input 1 (l_lot) is horizontal size of the parking lot
+%       input 2 (w_lot) is vertical size of the parking lot
+%       input 3 (l_spot) is horizontal size of each parking spot
+%       input 4 (w_spot) is vertical size of each parking spot
+%       input 5 (n_row) is number of parking spot per row
+
+    %   Create the Total Parking Lot
+    x_center = l_lot/2;
+    y_center = w_lot/2;
+    draw_rec(x_center,y_center ,l_lot,w_lot,'k')
+
+    %   Create Array Holders for Parking Spot Coordinates
+    x_spots = zeros(n_row,1);
+    y_spots = zeros(n_row,2);
+    
+    %   Create 2x n_row Spots
+    for i = 1:1:n_row
+        x_spots(i) = (l_lot - n_row*l_spot) + l_spot*(i-1) + l_spot/2;
+
+        %   Each of the n_row Spots on Bottom Row
+        y_spots(i,1) = w_spot/2;
+        draw_rec(x_spots(i),y_spots(i,1),l_spot,w_spot,'r');
+
+        %   Each of the n_row Spots on Top Row
+        y_spots(i,2) = w_lot - w_spot/2;
+        draw_rec(x_spots(i),y_spots(i,2),l_spot,w_spot,'r');
+end
