@@ -1,0 +1,38 @@
+function create_car(x_car,y_car,l_car,w_car,color,angle)
+%   create_car draws a Solid Rectangular Box based on 4 Corners
+%       create_car(cx,cy,l,w,color,ang) draws a Solid Rectangle
+%       there is no numeric output
+%       input 1 (x_car) is x-coordinate for the Center of the Rectangle
+%       input 2 (y_car) is y-coordinate for the Center of the Rectangle
+%       input 3 (l_car) is horizontal size of the Rectangle
+%       input 4 (w_car) is vertical size of the Rectangle
+%       input 5 (color) is the color code used on the Rectangle Solid
+%       input 6 (angle) is the Angle of Rotation on the Rectangle against 
+%           the horizontal axis
+
+    % Trigonometric Propreties of Rotation
+    c = cos(angle); 
+    s = sin(angle);
+    
+    % Solve for the Coordinates of the Four Corners with Rotation
+    rx = zeros(1,4);            ry = zeros(1,4);
+    
+    %   Corner 1
+    rx(1) = x_car + l_car/2*c - w_car/2*s; 
+    ry(1) = y_car + l_car/2*s + w_car/2*c;
+    
+    %   Corner 2
+    rx(2) = x_car + l_car/2*c + w_car/2*s; 
+    ry(2) = y_car + l_car/2*s - w_car/2*c;
+    
+    %   Corner 3
+    rx(3) = x_car - l_car/2*c + w_car/2*s; 
+    ry(3) = y_car - l_car/2*s - w_car/2*c;
+    
+    %   Corner 4
+    rx(4) = x_car - l_car/2*c - w_car/2*s; 
+    ry(4) = y_car - l_car/2*s + w_car/2*c;
+    
+    %   Fill the Polygon with the 4 Stated Corners
+    fill(rx,ry,color)
+end
