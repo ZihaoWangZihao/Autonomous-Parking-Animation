@@ -1,0 +1,94 @@
+function [path_x, path_y] = find_path(x_car, y_car, x_spot, y_spot, TR)
+%   find_path calculated the path taken by car starting at (x_car, y_car)
+%       and ending at (x_spot, y_spot) with a specified turning radius
+%       
+%       find_path(x_car, y_car, x_spot, y_spot, TR) returns the x- and y-
+%       coordinates of the path as 2 distinct arrays
+%       input 1 (x_car) is x-coordinate for the center of car rectangle
+%       input 2 (y_car) is y-coordinate for the center of car rectangle
+%       input 3 (x_spot) is x-coordinate for the center of parking spot
+%       input 4 (y_spot) is y-coordinate for the center of parking spot
+%       input 5 (TR) is the turning radius
+
+%%  Ratio the Number of Points Per Segment Base on Length
+
+%   Number of Points per Path
+np = 300;
+
+%   Total Length = x_d + 1/4*circumference of the circular turn + y_d
+x_d = x_spot - x_car - TR;  % Distance Traveled in Pure x
+t_d = 0.5*pi*TR;            % Distance Traveled during the turn
+y_d = abs(y_spot - y_car) - TR; % Distance Traveled in Pure y
+
+%   Calculate the Number of Points for Each Segment Base on Ratio
+np_p1 = floor(x_d/(x_d + t_d + y_d)*np);
+np_p2 = floor(t_d/(x_d + t_d + y_d)*np);
+np_p3 = np - np_p1 - np_p2;
+
+%---------------------------------------------------------------
+%   Path 1 - Car moves from (x_car, y_car) to (x_spot - TR, y_car)
+%---------------------------------------------------------------
+path1_x = linspace(x_car,x_spot - TR,np_p1);
+path1_y = y_car*ones(1,np_p1);
+% hold on
+% plot(path1_x,path1_y,'k','LineWidth',3)
+% hold off
+
+%   For Spots on the Bottom Row
+if y_spot < y_car
+
+%---------------------------------------------------------------
+%   Path 2 - Car moves from (x_spot - TR, y_car) 
+%       to (x_spot, y_car - TR)
+%---------------------------------------------------------------
+    x_rc = x_spot - TR; % x-coordinate for the Center of Rotation
+    y_rc = y_car - TR;  % y-coordinate for the Center of Rotation
+
+    path2_x = x_rc + TR*cos(linspace(pi/2, 0, np_p2));
+    path2_y = y_rc + TR*sin(linspace(pi/2, 0, np_p2));
+%     hold on
+%     plot(path2_x,path2_y,'k','LineWidth',3)
+%     hold off
+
+%---------------------------------------------------------------
+%   Path 3 - Car moves from (x_spot, y_car - TR)
+%       to (x_spot, y_spot)
+%---------------------------------------------------------------
+    path3_x = x_spot*ones(1,np_p3);
+    path3_y = linspace(y_car - TR,y_spot,np_p3);
+%     hold on
+%     plot(path3_x,path3_y,'k','LineWidth',3)
+%     hold off
+
+%   For Spots on the Top Row
+else
+%---------------------------------------------------------------
+%   Path 2 - Car moves from (x_spot - TR, y_car) 
+%       to (x_spot, y_car + TR)
+%---------------------------------------------------------------
+    x_rc = x_spot - TR; % x-coordinate for the Center of Rotation
+    y_rc = y_car + TR;  % y-coordinate for the Center of Rotation
+
+    path2_x = x_rc + TR*cos(linspace(3*pi/2, 2*pi, np_p2));
+    path2_y = y_rc + TR*sin(linspace(3*pi/2, 2*pi, np_p2));
+%     hold on
+%     plot(path2_x,path2_y,'k','LineWidth',3)
+%     hold off
+
+%---------------------------------------------------------------
+%   Path 3 - Car moves from (x_spot, y_car + TR)
+%       to (x_spot, y_spot)
+%---------------------------------------------------------------
+    path3_x = x_spot*ones(1,np_p3);
+    path3_y = linspace(y_car + TR,y_spot,np_p3);
+%     hold on
+%     plot(path3_x,path3_y,'k','LineWidth',3)
+%     hold off
+
+end
+
+%   Combine Each Segment of the Path for Return Variable
+path_x = [path1_x path2_x path3_x];
+path_y = [path1_y path2_y path3_y];
+
+end
