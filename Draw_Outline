@@ -1,0 +1,23 @@
+function draw_rec(x,y,l,w,c)
+%   draw_rec Plots a Empty Rectangular Box based on 4 sides
+%       draw_rec(x,y,l,w,c) plots One Rectangle
+%       there is no numeric output
+%       input 1 (x) is x-coordinate for the Center of the Rectangle
+%       input 2 (y) is y-coordinate for the Center of the Rectangle
+%       input 3 (l) is horizontal size of the Rectangle
+%       input 4 (w) is vertical size of the Rectangle
+%       input 5 (c) is the color code used on the Rectangle Edges
+    
+    %   Plot the Bottom Line
+    plot([x-l/2,x+l/2],[y-w/2,y-w/2],c,'LineWidth',3)
+    
+    %   Plot the Top Line
+    plot([x-l/2,x+l/2],[y+w/2,y+w/2],c,'LineWidth',3)
+    
+    %   Plot the Left Line
+    plot([x-l/2,x-l/2],[y-w/2,y+w/2],c,'LineWidth',3)
+
+    %   Plot the Right Line
+    plot([x+l/2,x+l/2],[y-w/2,y+w/2],c,'LineWidth',3)
+    
+end
