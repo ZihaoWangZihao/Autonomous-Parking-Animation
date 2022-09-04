@@ -1,0 +1,24 @@
+function populate_spots(x_spots, y_spots, n_cars)
+%   populate_spots Plots the Parked Cars in Existing Parking Lot
+%       populate_spots(x_spots, y_spots, n_row) plots a figure
+%       there is no numeric output
+%       input 1 (x_spots) are the x-coordinates for center of 
+%           each parking spot that has a parked car
+%       input 2 (y_spots) are the y-coordinates for center of 
+%           each parking spot that has a parked car
+%       input 3 (n_cars) are the number of parked cars
+
+%   Error Check for Number of Parked Cars
+if length(x_spots) ~= n_cars || length(y_spots) ~= n_cars
+    error('Number of parked cars inconsistent!')
+end
+
+%   Define Car Parameter if Values not Passed in
+l_car = 500;            % Length of a Car
+w_car = 230;            % Width of a Car
+
+%   Plot each parked cars in the current parking lot plot
+for i = 1:1:n_cars
+    create_car(x_spots(i),y_spots(i),l_car,w_car,'m',pi/2);
+end
+
